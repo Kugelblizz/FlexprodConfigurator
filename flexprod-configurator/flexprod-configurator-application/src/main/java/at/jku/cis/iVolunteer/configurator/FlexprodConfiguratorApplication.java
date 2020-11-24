@@ -6,9 +6,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @SpringBootApplication
-public class ConfiguratorApplication {
+public class FlexprodConfiguratorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ConfiguratorApplication.class, args);
+		SpringApplication.run(FlexprodConfiguratorApplication.class, args);
 	}
 }
