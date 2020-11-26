@@ -1,5 +1,6 @@
 package at.jku.cis.FlexProd.configurator.matching;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,21 +23,20 @@ public class MatchingService {
 	@Autowired private DateTimeService dateTimeService;
 	Logger logger = Logger.getLogger(MatchingService.class);
 
-	public Map<ClassInstanceComparison, Double> matchClassInstancesAndClassInstances(
+	public List<ClassInstanceComparison> matchClassInstancesAndClassInstances(
 			List<ClassInstance> leftClassInstances, List<ClassInstance> rightClassInstances,
 			List<ClassDefinition> classDefinitions, List<MatchingOperatorRelationship> relationships) {
 
-		Map<ClassInstanceComparison, Double> rankedMap = new HashMap<ClassInstanceComparison, Double>();
+		List<ClassInstanceComparison> rankedList = new ArrayList<ClassInstanceComparison>();
 
 		for (ClassInstance leftClassInstance : leftClassInstances) {
 			for (ClassInstance rightClassInstance : rightClassInstances) {
 				double score = matchClassInstanceAndClassInstance(leftClassInstance, rightClassInstance,
 						classDefinitions, relationships);
-				rankedMap.put(new ClassInstanceComparison(leftClassInstance.getId(), rightClassInstance.getId()),
-						score);
+				rankedList.add(new ClassInstanceComparison(leftClassInstance.getId(), rightClassInstance.getId(),score));
 			}
 		}
-		return rankedMap;
+		return rankedList;
 	}
 
 	public double matchClassInstanceAndClassInstance(ClassInstance leftClassInstance, ClassInstance rightClassInstance,

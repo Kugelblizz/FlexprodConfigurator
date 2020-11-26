@@ -4,13 +4,15 @@ public class ClassInstanceComparison {
 
 	private String leftClassInstanceId;
 	private String rightClassInstanceId;
+	private double score;
 
 	public ClassInstanceComparison() {
 	}
 
-	public ClassInstanceComparison(String leftClassInstanceId, String rightClassInstanceId) {
+	public ClassInstanceComparison(String leftClassInstanceId, String rightClassInstanceId, double score) {
 		this.leftClassInstanceId = leftClassInstanceId;
 		this.rightClassInstanceId = rightClassInstanceId;
+		this.score = score;
 	}
 
 	public String getRightClassInstanceId() {
@@ -27,6 +29,14 @@ public class ClassInstanceComparison {
 
 	public void setLeftClassInstanceId(String leftClassInstanceId) {
 		this.leftClassInstanceId = leftClassInstanceId;
+	}
+
+	public double getScore() {
+		return score;
+	}
+
+	public void setScore(double score) {
+		this.score = score;
 	}
 
 }

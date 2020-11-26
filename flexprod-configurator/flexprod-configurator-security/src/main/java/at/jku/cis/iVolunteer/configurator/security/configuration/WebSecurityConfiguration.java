@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -23,12 +24,15 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable()
-			.antMatcher("/match/**")
-			.authorizeRequests().anyRequest().permitAll();
+		http.cors().and().csrf().disable();
+		http.authorizeRequests().antMatchers("/match/**").permitAll().anyRequest().authenticated();
+
+//		http.addFilter(new JWTAuthorizationFilter(authenticationManager())).sessionManagement()
+//				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
+
 	}
 
 	@Override
@@ -37,7 +41,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {		
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 	}
 
 	@Bean
