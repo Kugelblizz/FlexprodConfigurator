@@ -11,52 +11,33 @@ import org.springframework.stereotype.Service;
 
 import at.jku.cis.FlexProd.configurator.model.clazz.ClassDefinition;
 import at.jku.cis.FlexProd.configurator.model.clazz.ClassInstance;
-import at.jku.cis.FlexProd.configurator.model.configurations.matching.MatchingOperatorRelationship;
+import at.jku.cis.FlexProd.configurator.model.matching.MatchingOperatorRelationship;
 import at.jku.cis.FlexProd.configurator.model.property.definition.ClassProperty;
 import at.jku.cis.FlexProd.configurator.model.property.instance.PropertyInstance;
-import at.jku.cis.iVolunteer.marketplace.commons.DateTimeService;
-import at.jku.cis.iVolunteer.marketplace.configurations.matching.relationships.MatchingOperatorRelationshipRepository;
-import at.jku.cis.iVolunteer.marketplace.meta.core.class_.ClassDefinitionRepository;
-import at.jku.cis.iVolunteer.marketplace.meta.core.class_.ClassInstanceRepository;
 
 @Service
 public class MatchingService {
 
-	@Autowired private MatchingOperatorRelationshipRepository matchingOperatorRelationshipRepository;
-	@Autowired private ClassInstanceRepository classInstanceRepository;
-	@Autowired private ClassDefinitionRepository classDefinitionRepository;
 	@Autowired private MatchingPreparationService matchingPreparationService;
 	@Autowired private DateTimeService dateTimeService;
-	private static final Logger logger = Logger.getLogger(MatchingService.class);
+	Logger logger = Logger.getLogger(MatchingService.class);
 
-//	TODO need to return list with <CI, score>
-//	here only overall similarity is calculated
-
-	public double matchClassInstanceAndClassInstance(String leftClassInstanceId, String rightClassInstanceId,
-			List<MatchingOperatorRelationship> relationships) {
-		ClassInstance leftClassInstance = classInstanceRepository.findOne(leftClassInstanceId);
-		ClassInstance rightClassInstance = classInstanceRepository.findOne(rightClassInstanceId);
-		List<ClassDefinition> classDefinitions = classDefinitionRepository.findAll();
-
-		return this.matchClassInstanceAndClassInstance(leftClassInstance, rightClassInstance, classDefinitions,
-				relationships);
-	}
-
-	public Map<ClassInstanceComparison, Double> matchClassInstancesAndClassInstances(List<ClassInstance> leftClassInstances, List<ClassInstance> rightClassInstances,
+	public Map<ClassInstanceComparison, Double> matchClassInstancesAndClassInstances(
+			List<ClassInstance> leftClassInstances, List<ClassInstance> rightClassInstances,
 			List<ClassDefinition> classDefinitions, List<MatchingOperatorRelationship> relationships) {
-		
+
 		Map<ClassInstanceComparison, Double> rankedMap = new HashMap<ClassInstanceComparison, Double>();
-		
+
 		for (ClassInstance leftClassInstance : leftClassInstances) {
 			for (ClassInstance rightClassInstance : rightClassInstances) {
-				double score = matchClassInstanceAndClassInstance(leftClassInstance, rightClassInstance, classDefinitions, relationships);
-				rankedMap.put(new ClassInstanceComparison(leftClassInstance.getId(), rightClassInstance.getId()), score);
+				double score = matchClassInstanceAndClassInstance(leftClassInstance, rightClassInstance,
+						classDefinitions, relationships);
+				rankedMap.put(new ClassInstanceComparison(leftClassInstance.getId(), rightClassInstance.getId()),
+						score);
 			}
 		}
 		return rankedMap;
 	}
-	
-	
 
 	public double matchClassInstanceAndClassInstance(ClassInstance leftClassInstance, ClassInstance rightClassInstance,
 			List<ClassDefinition> classDefinitions, List<MatchingOperatorRelationship> relationships) {
@@ -91,60 +72,6 @@ public class MatchingService {
 		double totalWeighting = relationships.stream().mapToDouble(r -> r.getWeighting()).sum();
 		return (sum / totalWeighting);
 	}
-
-//	public float match(String volunteerId, String tenantId) {
-//		List<MatchingOperatorRelationship> relationships = this.matchingOperatorRelationshipRepository
-//				.findByTenantId(tenantId);
-//		List<ClassInstance> classInstances = classInstanceRepository.getByUserIdAndTenantId(volunteerId, tenantId);
-//		List<ClassDefinition> classDefinitions = classDefinitionRepository.findByTenantId(tenantId);
-//
-//		float sum = 0;
-//
-//		// @formatter:off
-//		for (MatchingOperatorRelationship relationship : relationships) {
-//			List<ClassDefinition> leftClassDefinitions = 
-//					matchingPreparationService
-//						.retriveLeftClassDefinition(classDefinitions, relationship);
-//			
-//			ClassProperty<Object> leftClassProperty = 
-//					matchingPreparationService
-//						.retrieveLeftClassProperty(leftClassDefinitions, relationship);
-//			
-//			List<ClassDefinition> rightClassDefinitions = 
-//					matchingPreparationService
-//						.retrieveRightClassDefinitionEntity(classDefinitions, relationship);
-//			
-//			ClassProperty<Object> rightClassProperty = 
-//					matchingPreparationService
-//						.retrieveRightClassProperty(rightClassDefinitions, relationship);
-//
-//			List<ClassInstance> leftClassInstances = 
-//					classInstances
-//					.stream()
-//					.filter(
-//							ci -> leftClassDefinitions
-//								.stream()
-//								.anyMatch(lcd -> lcd.getId().equals(ci.getClassDefinitionId())))
-//					.collect(Collectors.toList());
-//			
-//			List<ClassInstance> rightClassInstances = 
-//					classInstances
-//					.stream()
-//					.filter(
-//							ci -> rightClassDefinitions
-//								.stream()
-//								.anyMatch(rcd -> rcd.getId().equals(ci.getClassDefinitionId())))
-//					.collect(Collectors.toList());
-//
-//			sum += this.matchListAndList(leftClassInstances, leftClassProperty, rightClassInstances, rightClassProperty,
-//					relationship);
-//			
-//		}
-//		 
-//		// @formatter:on
-//		System.out.println("Matching Score: " + sum / relationships.size());
-//		return sum / relationships.size();
-//	}
 
 	public double matchListAndList(List<ClassInstance> leftClassInstances, ClassProperty<Object> leftClassProperty,
 			List<ClassInstance> rightClassInstances, ClassProperty<Object> rightClassProperty,
@@ -263,7 +190,6 @@ public class MatchingService {
 
 	private double compareDate(PropertyInstance<Object> leftPropertyInstance,
 			PropertyInstance<Object> rightPropertyInstance, MatchingOperatorRelationship relationship) {
-//		TODO calculate fuzzyness???
 		Date leftDate = this.dateTimeService
 				.parseMultipleDateFormats(leftPropertyInstance.getValues().get(0).toString());
 		Date rightDate = this.dateTimeService
@@ -311,7 +237,6 @@ public class MatchingService {
 
 	private double compareText(PropertyInstance<Object> leftPropertyInstance,
 			PropertyInstance<Object> rightPropertyInstance, MatchingOperatorRelationship relationship) {
-//		TODO implement fuzzyness??
 		String leftString = leftPropertyInstance.getValues().get(0).toString();
 		String rightString = rightPropertyInstance.getValues().get(0).toString();
 		switch (relationship.getMatchingOperatorType()) {

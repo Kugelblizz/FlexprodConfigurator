@@ -1,24 +1,18 @@
 package at.jku.cis.FlexProd.configurator.matching;
 
-import static at.jku.cis.iVolunteer.marketplace.meta.core.class_.CollectionService.PATH_DELIMITER;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import at.jku.cis.FlexProd.configurator.model.clazz.ClassDefinition;
-import at.jku.cis.FlexProd.configurator.model.clazz.ClassInstance;
-import at.jku.cis.FlexProd.configurator.model.configurations.matching.MatchingOperatorRelationship;
+import at.jku.cis.FlexProd.configurator.model.matching.MatchingOperatorRelationship;
 import at.jku.cis.FlexProd.configurator.model.property.definition.ClassProperty;
 
 @Service
 public class MatchingPreparationService {
+	public static final String PATH_DELIMITER = Character.toString((char) 28);
 
-//	TODO MWE need to handle inherited properties for which matching is defined....
-//	retrieve all CDs (list<CD>) from the left/right Path and handle all of their instances
-// 	id of ClassProperty and their PropertyInstances are equal!!!
-	
 	List<ClassDefinition> retriveLeftClassDefinition(List<ClassDefinition> classDefinitions,
 			MatchingOperatorRelationship relationship) {
 		List<ClassDefinition> leftClassDefinitions = new ArrayList<>();
