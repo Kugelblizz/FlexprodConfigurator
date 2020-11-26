@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>at.jku.cis</groupId>
-		<artifactId>configurator</artifactId>
+		<artifactId>flexprod-configurator</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
@@ -13,22 +13,22 @@
 	<dependencies>
 		<dependency>
 			<groupId>at.jku.cis</groupId>
-			<artifactId>configurator-security</artifactId>
+			<artifactId>flexprod-configurator-security</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>at.jku.cis</groupId>
-			<artifactId>configurator-config</artifactId>
+			<artifactId>flexprod-configurator-config</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>at.jku.cis</groupId>
-			<artifactId>configurator-model</artifactId>
+			<artifactId>flexprod-configurator-model</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>at.jku.cis</groupId>
-			<artifactId>configurator-core</artifactId>
+			<artifactId>flexprod-configurator-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

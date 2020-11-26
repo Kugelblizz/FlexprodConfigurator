@@ -6,7 +6,7 @@
 	<parent>
 		<version>0.0.1-SNAPSHOT</version>
 		<groupId>at.jku.cis</groupId>
-		<artifactId>configurator</artifactId>
+		<artifactId>flexprod-configurator</artifactId>
 	</parent>
 
 	<artifactId>flexprod-configurator-model</artifactId>
@@ -24,10 +24,5 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<dependency>
-            <groupId>org.kie</groupId>
-            <artifactId>kie-api</artifactId>
-            <version>7.34.0.Final</version>
-        </dependency>
 	</dependencies>
 </project>

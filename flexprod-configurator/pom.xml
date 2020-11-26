@@ -28,8 +28,6 @@
 		<module>flexprod-configurator-application</module>
 		<module>flexprod-configurator-security</module>
 		<module>flexprod-configurator-config</module>
-
-
 		<module>flexprod-configurator-core</module>
 		<module>flexprod-configurator-model</module>
 	</modules>
