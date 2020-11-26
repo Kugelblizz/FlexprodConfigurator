@@ -21,16 +21,6 @@
 			<artifactId>flexprod-configurator-config</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>at.jku.cis</groupId>
-			<artifactId>flexprod-configurator-model</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>at.jku.cis</groupId>
-			<artifactId>flexprod-configurator-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 	</dependencies>
 
 	<build>
